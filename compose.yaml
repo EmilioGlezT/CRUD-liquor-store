@@ -1,9 +1,31 @@
 services:
-  postgres:
-    image: 'postgres:latest'
+  db:
+    image: postgres:13 
+    container_name: postgres-db
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      POSTGRES_USER: emilio 
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: CRUD_VINICOLA
     ports:
-      - '5432'
+      - "5432:5432"
+    networks:
+      - mi-red
+
+  
+  app:
+    image: enemyemy01/back_services_crud:latest
+    container_name: springboot-app
+    ports:
+      - "80:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/CRUD_VINICOLA
+      SPRING_DATASOURCE_USERNAME: emilio
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - db 
+    networks:
+      - mi-red
+
+networks:
+  mi-red:
+    driver: bridge

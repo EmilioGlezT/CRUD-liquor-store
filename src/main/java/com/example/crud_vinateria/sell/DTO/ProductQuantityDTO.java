@@ -1,7 +1,5 @@
 package com.example.crud_vinateria.sell.DTO;
 
-import java.util.List;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
